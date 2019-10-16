@@ -9,10 +9,10 @@ const state = {
 const getters = {
     getAutocompleteList() {
         const citiesArray = state.cities;
-        const countriesArray = state.countries;
+        const countriesObj = state.countries;
 
         const citiesAndCountriesArray = citiesArray.map(cityObj => {
-            return ({ [`${cityObj.name || cityObj.name_translations.en}, ${countriesArray[cityObj.country_code]}`]: null })
+            return ({ [`${cityObj.name || cityObj.name_translations.en}, ${countriesObj[cityObj.country_code]}`]: null })
         });
 
         const citiesAndCountriesObject = citiesAndCountriesArray.reduce(function (acc, item) {
