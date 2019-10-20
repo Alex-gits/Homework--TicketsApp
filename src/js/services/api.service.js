@@ -35,7 +35,6 @@ async function getAirlines() {
 
 async function getTickets(params) {
     try {
-        // price/cheap?origin=&destination=&depart_date&return_date
         const response = await axios.get(`${baseUrl}/prices/cheap`, {
             params,
         });

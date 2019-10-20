@@ -23,3 +23,13 @@ M.Datepicker.init(datepickers, {
     showClearBtn: true,
     format: 'yyyy-mm'
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const moneyDropDown = document.querySelector('.select-dropdown');
+    const favoriteDropDown = document.querySelector('.dropdown-trigger');
+
+    M.Dropdown.init(moneyDropDown);
+    M.Dropdown.init(favoriteDropDown, {
+        closeOnClick: false,
+    });
+});

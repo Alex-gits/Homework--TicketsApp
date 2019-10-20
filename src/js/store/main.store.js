@@ -1,12 +1,16 @@
 import api from "../services/api.service";
 import { format } from 'date-fns';
 import ticketsUi from '../views/tickets.view';
+import favorite from '../views/favorites.view';
+import currencyUi from '../views/currency.view';
+
 // состояние приложения
 const state = {
     countries: {},
     cities: {},
     airlines: {},
-    lastSearch: {}
+    lastSearch: {},
+    favourites: {}
 };
 
 // набор ф-й который возвращает нужные для контроллера данные
@@ -50,7 +54,8 @@ const actions = {
             item.destination_name = state.cities[item.destination].name;
             item.airline_logo = state.airlines[item.airline] ? state.airlines[item.airline].logo : 'http://pics.avs.io/200/200/LO.png';
             item.departure_time = format(new Date(item.departure_at), 'dd MMM yyyy hh:mm');
-        })
+            item.id = Math.random();
+        });
 
         state.lastSearch = response.data;
         ticketsUi.renderTickets(); // функция из модуля tickets.view для создания разметки билетов/эмпти месседжа
@@ -60,7 +65,7 @@ const actions = {
             airline.logo = `http://pics.avs.io/200/200/${airline.code}.png`;
             airline.name = airline.name || airline.name_translations.en;
             acc[airline.code] = airline;
-            return acc
+            return acc;
         }, {})
     },
     serializeCountries(countries) {
@@ -81,6 +86,25 @@ const actions = {
             };
             return acc;
         }, {});
+    }, // Ниже две функции для добавления/удаления билетов в хранилище. Первая функция еще запускает функцию из favorites.view.js, которая отвечает за добавление разметки билетов на страницу
+    addToFavoriteStorage(id) {
+        const currencyType = currencyUi.getCurrencySymbol();
+
+        Object.values(state.lastSearch).forEach(item => {
+            if (state.favourites[item.id]) return;
+
+            if (id == item.id) {
+                state.favourites[item.id] = item;
+                favorite.renderFavorite(item, currencyType);
+            }
+        })
+    },
+    deleteFromFavorite(id) {
+        Object.values(state.favourites).forEach(item => {
+            if (id == item.id) {
+                delete state.favourites[id];
+            }
+        })
     }
 };
 

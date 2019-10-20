@@ -24,12 +24,32 @@ document.addEventListener('DOMContentLoaded', e => {
         const destinationValue = store.getters.getCityCodeByFullName(destination.value);
         const departDate = departDatepicker.value;
         const returnDate = returnDatepicker.value;
+        const currencyType = ui.currency.value;
 
         store.actions.fetchTickets({
             origin: originValue,
             destination: destinationValue,
             depart_date: departDate,
-            return_date: returnDate
+            return_date: returnDate,
+            currency: currencyType,
         })
     }
+})
+
+ui.ticketsContainer.addEventListener('click', e => {
+    if (!e.target.classList.contains('add-favorite')) return;
+
+    const ticketWrapper = e.target.closest('.ticket-wrapper');
+
+    store.actions.addToFavoriteStorage(ticketWrapper.dataset.id);
+})
+
+ui.favoritesDropDown.addEventListener('click', e => {
+    if (!e.target.classList.contains('delete-favorite')) return;
+
+    const favoriteTicket = e.target.closest('.favorite-item');
+    const faroviteId = favoriteTicket.dataset.id;
+
+    store.actions.deleteFromFavorite(faroviteId);
+    favoriteTicket.remove();
 })
