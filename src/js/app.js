@@ -36,6 +36,8 @@ document.addEventListener('DOMContentLoaded', e => {
     }
 })
 
+// функции, иницилизирующие добавление/удаление избранных тикетов
+
 ui.ticketsContainer.addEventListener('click', e => {
     if (!e.target.classList.contains('add-favorite')) return;
 
