@@ -4,5 +4,5 @@ export default {
     destination: document.getElementById('autocomplete-destination'),
     departDatepicker: document.getElementById('datepicker-depart'),
     returnDatepicker: document.getElementById('datepicker-return'),
-    ticketsContainer: document.querySelectorAll('.tickets-section .row'),
+    ticketsContainer: document.querySelector('.tickets-sections .row'),
 }

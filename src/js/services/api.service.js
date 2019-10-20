@@ -33,4 +33,17 @@ async function getAirlines() {
     }
 }
 
-export default { getCountries, getCities, getAirlines };
+async function getTickets(params) {
+    try {
+        // price/cheap?origin=&destination=&depart_date&return_date
+        const response = await axios.get(`${baseUrl}/prices/cheap`, {
+            params,
+        });
+        return response.data;
+    } catch (err) {
+        console.log(err);
+        return Promise.reject();
+    }
+}
+
+export default { getCountries, getCities, getAirlines, getTickets };
