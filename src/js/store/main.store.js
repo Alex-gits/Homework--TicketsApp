@@ -1,8 +1,6 @@
 import api from "../services/api.service";
 import { format } from 'date-fns';
 import ticketsUi from '../views/tickets.view';
-import favorite from '../views/favorites.view';
-import currencyUi from '../views/currency.view';
 
 // состояние приложения
 const state = {
@@ -10,7 +8,6 @@ const state = {
     cities: {},
     airlines: {},
     lastSearch: {},
-    favourites: {}
 };
 
 // набор ф-й который возвращает нужные для контроллера данные
@@ -86,26 +83,7 @@ const actions = {
             };
             return acc;
         }, {});
-    }, // Ниже две функции для добавления/удаления билетов в хранилище. Первая функция еще запускает функцию из favorites.view.js, которая отвечает за добавление разметки билетов на страницу
-    addToFavoriteStorage(id) {
-        const currencyType = currencyUi.getCurrencySymbol();
-
-        Object.values(state.lastSearch).forEach(item => {
-            if (state.favourites[item.id]) return;
-
-            if (id == item.id) {
-                state.favourites[item.id] = item;
-                favorite.renderFavorite(item, currencyType);
-            }
-        })
     },
-    deleteFromFavorite(id) {
-        Object.values(state.favourites).forEach(item => {
-            if (id == item.id) {
-                delete state.favourites[id];
-            }
-        })
-    }
 };
 
 export default {

@@ -3,6 +3,8 @@ import './plugins';
 import store from './store/main.store';
 import formView from './views/form.view';
 import ui from './config/ui.config';
+import favorites from './store/favorites.store';
+import { getDropDownInstance } from './plugins/materialize'
 
 
 const { form, origin, destination, departDatepicker, returnDatepicker } = ui;
@@ -43,15 +45,19 @@ ui.ticketsContainer.addEventListener('click', e => {
 
     const ticketWrapper = e.target.closest('.ticket-wrapper');
 
-    store.actions.addToFavoriteStorage(ticketWrapper.dataset.id);
+    favorites.favoritesActions.addToFavoriteStorage(ticketWrapper.dataset.id);
 })
 
 ui.favoritesDropDown.addEventListener('click', e => {
     if (!e.target.classList.contains('delete-favorite')) return;
 
     const favoriteTicket = e.target.closest('.favorite-item');
-    const faroviteId = favoriteTicket.dataset.id;
+    const favoriteDropDown = ui.favoritesButton;
+    const favoriteId = favoriteTicket.dataset.id;
 
-    store.actions.deleteFromFavorite(faroviteId);
+    favorites.favoritesActions.deleteFromFavorite(favoriteId);
     favoriteTicket.remove();
+
+    const instance = getDropDownInstance(favoriteDropDown);
+    instance.recalculateDimensions(); // Автоматический ресайз дропдауна избранного
 })

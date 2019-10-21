@@ -17,6 +17,10 @@ export function getAutoCompleteInstance(el) {
     return M.Autocomplete.getInstance(el);
 }
 
+export function getDropDownInstance(el) {
+    return M.Dropdown.getInstance(el);
+}
+
 // Init datepickers
 const datepickers = document.querySelectorAll('.datepicker');
 M.Datepicker.init(datepickers, {
